@@ -26,6 +26,6 @@ jobs:
           xcodebuild clean build analyze \
             -project ACProgressHUDExample.xcodeproj \
             -scheme ACProgressHUDExample \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS,name=iPhone 13,OS=15.0' \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
