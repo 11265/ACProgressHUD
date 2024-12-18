@@ -27,5 +27,5 @@ jobs:
             -project ACProgressHUDExample.xcodeproj \
             -scheme ACProgressHUDExample \
             -sdk iphoneos \
-            -destination 'generic/platform=iOS,name=iPhone 13,OS=15.0' \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
