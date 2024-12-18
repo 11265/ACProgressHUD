@@ -28,4 +28,20 @@ jobs:
             -scheme ACProgressHUDExample \
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
+            -configuration Release \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Package IPA
+        run: |
+          cd ACProgressHUDExample/build/Release-iphoneos
+          mkdir Payload
+          cp -r ACProgressHUDExample.app Payload/
+          zip -r ACProgressHUDExample.ipa Payload/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ACProgressHUDExample-IPA
+          path: |
+            ACProgressHUDExample/build/Release-iphoneos/ACProgressHUDExample.ipa
+            ACProgressHUDExample/build/Release-iphoneos/ACProgressHUDExample.app
