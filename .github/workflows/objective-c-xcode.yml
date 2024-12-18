@@ -44,10 +44,8 @@ jobs:
           cd build/Release-iphoneos
           zip -r ACProgressHUDExample.ipa Payload/
 
-      - name: Upload Artifact
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ACProgressHUDExample-IPA
-          path: |
-            ACProgressHUDExample/build/Release-iphoneos/*.ipa
-            ACProgressHUDExample/build/Release-iphoneos/*.app
+          name: ACProgressHUD-Build
+          path: ACProgressHUDExample/build/
