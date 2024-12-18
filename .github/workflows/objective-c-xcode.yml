@@ -29,23 +29,33 @@ jobs:
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
             -configuration Release \
+            CONFIGURATION_BUILD_DIR="build/Release-iphoneos" \
+            BUILD_DIR="build" \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Check Build Directory
         run: |
-          echo "Checking build directory structure..."
-          ls -R ACProgressHUDExample/build/
+          echo "Current directory:"
+          pwd
+          echo "\nChecking build directory structure:"
+          ls -la ACProgressHUDExample/
+          echo "\nChecking build subdirectory:"
+          ls -la ACProgressHUDExample/build/ || echo "build directory not found"
+          echo "\nChecking DerivedData:"
+          ls -la ~/Library/Developer/Xcode/DerivedData/ || echo "DerivedData not found"
 
       - name: Package IPA
         run: |
           cd ACProgressHUDExample
           mkdir -p build/Release-iphoneos/Payload
-          cp -r build/Release-iphoneos/ACProgressHUDExample.app build/Release-iphoneos/Payload/
+          cp -r build/Release-iphoneos/ACProgressHUDExample.app build/Release-iphoneos/Payload/ || echo "Failed to copy .app file"
           cd build/Release-iphoneos
-          zip -r ACProgressHUDExample.ipa Payload/
+          zip -r ACProgressHUDExample.ipa Payload/ || echo "Failed to create IPA"
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ACProgressHUD-Build
-          path: ACProgressHUDExample/build/
+          path: |
+            ACProgressHUDExample/build/
+            ~/Library/Developer/Xcode/DerivedData/
