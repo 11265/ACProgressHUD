@@ -31,11 +31,17 @@ jobs:
             -configuration Release \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
+      - name: Check Build Directory
+        run: |
+          echo "Checking build directory structure..."
+          ls -R ACProgressHUDExample/build/
+
       - name: Package IPA
         run: |
-          cd ACProgressHUDExample/build/Release-iphoneos
-          mkdir Payload
-          cp -r ACProgressHUDExample.app Payload/
+          cd ACProgressHUDExample
+          mkdir -p build/Release-iphoneos/Payload
+          cp -r build/Release-iphoneos/ACProgressHUDExample.app build/Release-iphoneos/Payload/
+          cd build/Release-iphoneos
           zip -r ACProgressHUDExample.ipa Payload/
 
       - name: Upload Artifact
@@ -43,5 +49,5 @@ jobs:
         with:
           name: ACProgressHUDExample-IPA
           path: |
-            ACProgressHUDExample/build/Release-iphoneos/ACProgressHUDExample.ipa
-            ACProgressHUDExample/build/Release-iphoneos/ACProgressHUDExample.app
+            ACProgressHUDExample/build/Release-iphoneos/*.ipa
+            ACProgressHUDExample/build/Release-iphoneos/*.app
