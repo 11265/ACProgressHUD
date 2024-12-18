@@ -27,5 +27,5 @@ jobs:
             -project ACProgressHUDExample.xcodeproj \
             -scheme ACProgressHUDExample \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14' \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
             CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
